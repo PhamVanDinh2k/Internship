@@ -6,11 +6,10 @@ import torch.nn as nn
 import torchvision 
 from torchvision import models, transforms
 import os
-
+import base64
 
 test_dir ='./datatest'
 classes = os.listdir(test_dir)
-print(classes)
 
 def read_image(image_encoded):
     print(type(image_encoded))
@@ -19,18 +18,16 @@ def read_image(image_encoded):
     return pil_image
 
 class BaseTransform():
-  def __init__(self, resize, mean, std):
-    self.base_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(),transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+  def __init__(self):
+    self.base_transform = transforms.Compose([transforms.Resize((224, 224)), 
+                                            transforms.ToTensor(),
+                                            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
   def __call__(self, img_input):
     return self.base_transform(img_input)
 
 def preprocess(image : Image.Image):
-    resize = (224, 224)
-    mean = (0.485, 0.456, 0.406)
-    std = (0.229, 0.224, 0.225)
-
-    transforms = BaseTransform(resize, mean, std)
+    transforms = BaseTransform()
     img_tranformed = transforms(image)
     img_tranformed = torch.unsqueeze(torch.tensor(img_tranformed), 0)
     print(img_tranformed.shape)
@@ -43,7 +40,7 @@ class ResNet(nn.Module):
         self.network = models.resnet50(pretrained=True)
         # Replace last layer
         num_ftrs = self.network.fc.in_features
-        self.network.fc = nn.Linear(num_ftrs, 400)
+        self.network.fc = nn.Linear(num_ftrs, len(classes))
     
     def forward(self, xb):
         return torch.sigmoid(self.network(xb))

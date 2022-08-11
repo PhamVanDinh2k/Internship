@@ -3,6 +3,7 @@ from predictor import *
 import uvicorn
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
+import base64
 
 app = FastAPI()
 
@@ -14,13 +15,13 @@ async def hello():
 async def predict_image(file : bytes  = File(...)):
     # print(file.filename)
     print(type(file))
-    image = read_image(file)    
+    image = read_image(file)
     image = preprocess(image)
 
     # make prediction
     prediction = predict(image)
-    print(JSONResponse(prediction).body)
-    return JSONResponse(jsonable_encoder(prediction))
-
-if __name__ == "__main__":
-    uvicorn.run(app, port=8080, host= "127.0.0.1")
+    dice = {
+        'prediction': prediction,
+    }
+    print(JSONResponse(dice).body)
+    return JSONResponse(dice)

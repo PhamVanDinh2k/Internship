@@ -4,7 +4,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import os
-from torchsummary import summary
 import torchvision
 from PIL import Image
 import matplotlib.pyplot as plt
@@ -12,11 +11,9 @@ import numpy as np
 from torchvision.datasets import ImageFolder
 from torchvision import models, transforms
 
-test_dir ='./datatest'
+test_dir ='../datatest'
 classes = os.listdir(test_dir)
 print(classes)
-
-
 
 
 transformations = transforms.Compose([
@@ -49,13 +46,15 @@ net = ResNet()
 # net = models.resnet50(pretrained = True)
 # num_ftrs = net.fc.in_features
 # net.fc = nn.Linear(num_ftrs, len(test_dataset.classes))
-net.load_state_dict(torch.load("./models/resnet50plus.pth", map_location=torch.device('cpu')))
+net.load_state_dict(torch.load("../models/resnet50plus.pth", map_location=torch.device('cpu')))
 # print(net)
 net.eval()
 
 class BaseTransform():
-  def __init__(self, resize, mean, std):
-    self.base_transform = transforms.Compose([transforms.Resize((224, 224)), transforms.ToTensor(),transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
+  def __init__(self):
+    self.base_transform = transforms.Compose([transforms.Resize((224, 224)), 
+                                            transforms.ToTensor(),
+                                            transforms.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225))])
 
   def __call__(self, img_input):
     return self.base_transform(img_input)
@@ -79,24 +78,22 @@ class Pretictor():
 predict = Pretictor(net)
 
 
-""" img_path = "./test/AFRICAN CROWNED CRANE/3.jpg"
+img_path = "../datatest/AFRICAN CROWNED CRANE/3.jpg"
 img = Image.open(img_path)
 
-resize = (224, 224)
-mean = (0.485, 0.456, 0.406)
-std = (0.229, 0.224, 0.225)
-
-transforms = BaseTransform(resize, mean, std)
+transforms = BaseTransform()
 
 img_tranformed = transforms(img)
 
 img_tranformed = torch.unsqueeze(torch.tensor(img_tranformed), 0)
-print(img_tranformed.shape) """
-img, label = test_dataset[19]
-img = torch.unsqueeze(torch.tensor(img), 0)
-print(img.shape)
-out = net(img)
-print('Label:', test_dataset.classes[label])
+print(img_tranformed.shape)
+out = net(img_tranformed)
+# img, label = test_dataset[19]
+# img = torch.unsqueeze(torch.tensor(img), 0)
+# print('Label:', test_dataset.classes[label])
+# print(img.shape)
+# out = net(img)
+
 result = predict.predict_max(out)
 
 print("result ==", result)
