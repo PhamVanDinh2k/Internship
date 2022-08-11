@@ -3,10 +3,8 @@ from io import BytesIO
 import numpy as np 
 import torch
 import torch.nn as nn
-import torchvision 
 from torchvision import models, transforms
 import os
-import base64
 
 test_dir ='./datatest'
 classes = os.listdir(test_dir)

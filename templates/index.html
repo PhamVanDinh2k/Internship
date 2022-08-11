@@ -3,14 +3,32 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>Fastapi</title>
   </head>
+  <script>
+    function chooseFile(fileInput) {
+      if (fileInput.files && fileInput.files[0]) {
+        var render = new FileReader();
 
+        render.onload = function (e) {
+          $("#image").attr("src", e.target.result);
+        };
+        render.readAsDataURL(fileInput.files[0]);
+      }
+    }
+  </script>
   <body>
     <p>Hello Dinh</p>
-    <form action="/predict" method="post">
-      <label for="">file ảnh vào</label>
-      <input type="file" />
+    <form action="/test" method="post" enctype="multipart/form-data">
+      <img src="" alt="" id="image" width="200px" height="200px" />
+      <input
+        type="file"
+        name="file"
+        id="imageFile"
+        onchange="chooseFile(this)"
+      />
+      <input type="submit" value="submit" />
     </form>
   </body>
 </html>

@@ -1,6 +1,6 @@
 
 from multiprocessing import context
-from fastapi import FastAPI, Request, File
+from fastapi import FastAPI, Request, File, Form, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from predictor import *
@@ -14,18 +14,15 @@ def index(request: Request):
    context = {'request' : request}
    return templates.TemplateResponse("index.html", context) 
 
-
-@app.post("/api/predict", response_class=HTMLResponse)
-async def predict_image(file : bytes  = File(...)):
-    # print(file.filename)
-    print(type(file))
+@app.post("/test")
+async def handle_form(file : bytes = File(...)): 
     image = read_image(file)
     image = preprocess(image)
-    context = {'request' : request}
     # make prediction
     prediction = predict(image)
     dice = {
         'prediction': prediction,
     }
     print(JSONResponse(dice).body)
-    return JSONResponse(dice),templates.TemplateResponse("index.html", context) 
+    return JSONResponse(dice)
+

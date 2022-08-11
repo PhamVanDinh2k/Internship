@@ -1,9 +1,8 @@
 from fastapi import FastAPI, File, UploadFile
 from predictor import *
-import uvicorn
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-import base64
+
 
 app = FastAPI()
 
