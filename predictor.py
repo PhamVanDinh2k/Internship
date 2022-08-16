@@ -44,17 +44,17 @@ class ResNet(nn.Module):
         return torch.sigmoid(self.network(xb))
 
 class Pretictor():
-	def __init__(self, class_index):
-		self.class_index = class_index
-		self.classes = classes
-
-	def predict_max(self, out):
-		print(out.shape)
-		max_id = np.argmax(out.detach().numpy())
-		#predicted_label_name = self.class_index[str(max_id)]
-    
-		predicted_label_name = self.classes[(max_id)]
-		return predicted_label_name
+    def __init__(self, class_index):
+        self.class_index = class_index
+        self.classes = classes
+        
+    def predict_max(self, out):
+        print(out.shape)
+        max_id = np.argmax(out.detach().numpy())
+        max = np.max(out.detach().numpy())  
+        predicted_label_name = self.classes[(max_id)]
+        return [predicted_label_name, max] 
+        
 
 def predict(image):
     net = ResNet()
@@ -62,6 +62,7 @@ def predict(image):
     net.eval()
     predict = Pretictor(net)
     out = net(image)
-    result = predict.predict_max(out)
+    [result, max] = predict.predict_max(out)
     print("result ==", result)
-    return result
+    print("accuracy ==", max)
+    return result, max
