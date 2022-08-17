@@ -1,29 +1,51 @@
-from fastapi import FastAPI, File, UploadFile
-from predictor import *
-from fastapi.encoders import jsonable_encoder
-from fastapi.responses import JSONResponse
 import base64
+from multiprocessing import context
+from fastapi import FastAPI, Request, File, Form, UploadFile
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from predictor import *
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import JSONResponse
 
 app = FastAPI()
 
-@app.get("/")
-async def hello():
-    return {"messenger" : "hello"}
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="./templates")
 
-@app.post("/api/predict")
-async def predict_image(file : bytes  = File(...)):
-    print(type(file))
+
+@app.get("/index/", response_class=HTMLResponse)
+def index(request: Request):
+    context = {"request": request}
+    return templates.TemplateResponse("upload.html", context)
+
+
+@app.post("/test", response_class=HTMLResponse)
+async def handle_form(request: Request, file: bytes = File(...)):
     image = read_image(file)
     buffered = BytesIO()
     image.save(buffered, format="PNG")
     buffered.seek(0)
     img_byte = buffered.getvalue()
-    img_str = "data:image/png;base64," + base64.b64encode(img_byte).decode()
-    # # make prediction
-    # prediction = predict(image)
-    dice = {
-        # 'prediction': file.filename,
-        'base64': img_str,
+    img_str = base64.b64encode(img_byte).decode()
+    image1 = preprocess(image)
+
+    # make prediction
+    prediction, max = predict(image1)
+    maxx = round(max * 100,2)
+    accuracy = str(maxx)
+    context = {
+        "request": request,
+        "prediction": prediction,
+        "accuracy": accuracy,
+        "base64": img_str,
     }
-    print(JSONResponse(dice).body)
-    return JSONResponse(dice)
+    print(f"request : {request}")
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "prediction": prediction,
+            "accuracy": accuracy,
+            "base64": img_str,
+        },
+    )

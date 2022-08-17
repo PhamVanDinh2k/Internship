@@ -61,17 +61,16 @@ class BaseTransform():
 
 
 class Pretictor():
-	def __init__(self, class_index):
-		self.class_index = class_index
-		self.classes = test_dataset.classes
-
-	def predict_max(self, out):
-		print(out.shape)
-		max_id = np.argmax(out.detach().numpy())
+  def __init__(self, class_index):
+    self.class_index = class_index
+    self.classes = test_dataset.classes
+  def predict_max(self, out):
+    print(out.shape)
+    max_id = np.argmax(out.detach().numpy())
+    print("hi")
 		#predicted_label_name = self.class_index[str(max_id)]
-    
-		predicted_label_name = self.classes[(max_id)]
-		return predicted_label_name
+    predicted_label_name = self.classes[(max_id)]
+    return predicted_label_name
 
 # class_index = torch.load("resnet50plus.pth", "cpu")
 
@@ -87,6 +86,7 @@ img_tranformed = transforms(img)
 
 img_tranformed = torch.unsqueeze(torch.tensor(img_tranformed), 0)
 print(img_tranformed.shape)
+print(img_tranformed.detach().shape)  
 out = net(img_tranformed)
 # img, label = test_dataset[19]
 # img = torch.unsqueeze(torch.tensor(img), 0)

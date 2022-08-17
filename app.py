@@ -1,4 +1,3 @@
-
 import base64
 from multiprocessing import context
 from fastapi import FastAPI, Request, File, Form, UploadFile
@@ -7,18 +6,21 @@ from fastapi.templating import Jinja2Templates
 from predictor import *
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
+
 app = FastAPI()
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="./templates")
 
-@app.get('/index/', response_class=HTMLResponse)
-def index(request: Request):
-   context = {'request' : request}
-   return templates.TemplateResponse("upload.html", context) 
 
-@app.post("/test")
-async def handle_form(file : bytes = File(...)): 
+@app.get("/index/", response_class=HTMLResponse)
+def index(request: Request):
+    context = {"request": request}
+    return templates.TemplateResponse("upload.html", context)
+
+
+@app.post("/test", response_class=HTMLResponse)
+async def handle_form(request: Request, file: bytes = File(...)):
     image = read_image(file)
     buffered = BytesIO()
     image.save(buffered, format="PNG")
@@ -28,12 +30,22 @@ async def handle_form(file : bytes = File(...)):
     image1 = preprocess(image)
 
     # make prediction
-    prediction ,max = predict(image1)
+    prediction, max = predict(image1)
     maxx = max * 100
     accuracy = str(maxx)
-    dice = {
-        'prediction': prediction,
-        'accuracy': accuracy,
-        'base64' : img_str,
+    context = {
+        "request": request,
+        "prediction": prediction,
+        "accuracy": accuracy,
+        "base64": img_str,
     }
-    return JSONResponse(dice)
+    print(f"request : {request}")
+    return templates.TemplateResponse(
+        "index.html",
+        {
+            "request": request,
+            "prediction": prediction,
+            "accuracy": accuracy,
+            "base64": img_str,
+        },
+    )
