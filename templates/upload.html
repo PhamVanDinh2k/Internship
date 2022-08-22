@@ -1,82 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="../static/css/style.css" type="text/css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-      integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
-      integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  </head>
-  <script>
-    function chooseFile(fileInput) {
-      if (fileInput.files && fileInput.files[0]) {
-        var render = new FileReader();
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        render.onload = function (e) {
-          $("#anh").attr("src", e.target.result);
-        };
-        render.readAsDataURL(fileInput.files[0]);
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      function chooseFile(fileInput) {
+        if (fileInput.files && fileInput.files[0]) {
+          var render = new FileReader();
+
+          render.onload = function (e) {
+            $("#anh").attr("src", e.target.result);
+          };
+          render.readAsDataURL(fileInput.files[0]);
+        }
       }
-    }
-  </script>
-  <body>
-    
-    <div class="header">
-      <b class="fa fa-header" aria-hidden="true"
-        ><header>Phân Loại Các Loài Chim</header>
-      </b>
-      <img id="buom_2" src="../static/img/buom-2.png" alt="" />
-      <img
-        id="buom_3"
-        src="https://i.pinimg.com/originals/4f/14/a1/4f14a12a8ce277bdf3809780e884a879.gif"
-        alt=""
-      />
-    </div>
-    <div class="anh">
-      <form action="/test" method="post" enctype="multipart/form-data">
-        <img id="anh" src="../static/img/anh.png" alt="" />
-        <img id="chim_1" src="../static/img/chim1.png" alt="" />
-        <br />
-        <input
-          type="file"
-          name="file"
-          id="imageFile"
-          onchange="chooseFile(this)"
-        />
-      <img id="hac" src="../static/img/hac.png" alt="" />
-      <div class="d-md-flex justify-content-md-end">
-        <button class="btn btn-primary btn-lg btn-outline" id="predict">Phân Loại</button>
-        <img src="../static/img/up.png" alt="" />
+    </script>
+    <title>Hello, world!</title>
+  </head>
+  <body
+    style="
+      width: 100%;
+      height: 100%;
+      background-position: 0% 0%;
+      background-image: url(../static/img/backgd.png);
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-size: 100% auto;
+    "
+  >
+    <!-- container   -->
+    <div class="container">
+      <div class="row">
+        <!-- header row -->
+        <div class="col-4" style="margin-top: 5%">
+          <img
+            id="buom_2"
+            src="../static/img/buom-2.png"
+            alt=""
+            style="
+              position: absolute;
+              width: 5%;
+              margin-top: -3%;
+              margin-left: 27%;
+            "
+          />
+        </div>
+        <div
+          class="col-4"
+          style="
+            margin-top: 5%;
+            margin-bottom: 0;
+            color: rgb(0, 0, 0);
+            height: auto;
+            text-align: center;
+            background-color: rgb(254, 3, 3);
+          "
+        >
+          <b class="fa fa-header" aria-hidden="true">
+            <header style="font-size: 30px; font-family: 'Amatic SC', cursive">
+              Phân Loại Các Loài Chim
+            </header>
+          </b>
+        </div>
+        <div class="col-4" style="margin-top: 5%">
+          <img
+            id="buom_3"
+            src="https://i.pinimg.com/originals/4f/14/a1/4f14a12a8ce277bdf3809780e884a879.gif"
+            alt=""
+            style="
+              position: absolute;
+              width: 10%;
+              margin-top: -5%;
+              margin-left: -7%;
+            "
+          />
+        </div>
+        <!-- body row -->
+        <div
+          class="col-12"
+          style="margin-top: 3%; margin-bottom: 0; height: auto"
+        >
+          <form action="/test" method="post" enctype="multipart/form-data">
+            <button
+              class="btn btn-primary"
+              style="
+                width: 10%;
+                height: 5%;
+                position: absolute;
+                display: block;
+                margin-left: 55%;
+                margin-top: 10%;
+                font: size 6%;
+                text-align: center;
+              "
+            >Predict</button>
+            <img
+              id="anh"
+              src="../static/img/anh.png"
+              style="
+                height: width;
+                display: block;
+                margin-left: 15%;
+                margin-right: auto;
+                width: 40%;
+              "
+              alt=""
+            />
+            
+            <label
+              class="custom-file-upload"
+              style="
+                border: 1px solid #ccc;
+
+                padding: 6px 12px;
+                cursor: pointer;
+                display: block;
+                margin-left: 15%;
+                margin-right: auto;
+                text-align: center;
+                width: 40%;
+                background-color: rgb(0, 255, 145);
+              "
+            >
+              <input
+                type="file"
+                name="file"
+                id="imageFile"
+                onchange="chooseFile(this)"
+                style="display: none"
+              />
+
+              <i class="fa fa-cloud-upload"></i>
+              Image Upload
+            </label>
+
+            
+          </form>
+        </div>
       </div>
-    </form>
     </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+      integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
