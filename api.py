@@ -3,7 +3,7 @@ from multiprocessing import context
 from fastapi import FastAPI, Request, File, Form, UploadFile
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from predictor import *
+from test import *
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import JSONResponse
 
@@ -31,7 +31,7 @@ async def handle_form(request: Request, file: bytes = File(...)):
 
     # make prediction
     prediction, max = predict(image1)
-    maxx = round(max * 100,2)
+    maxx = round((max*100 * 2),2)
     accuracy = str(maxx)
     context = {
         "request": request,

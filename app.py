@@ -31,7 +31,7 @@ async def handle_form(request: Request, file: bytes = File(...)):
 
     # make prediction
     prediction, max = predict(image1)
-    maxx = max * 100
+    maxx = round((max * 100) - 1, 2)
     accuracy = str(maxx)
     context = {
         "request": request,
@@ -42,10 +42,5 @@ async def handle_form(request: Request, file: bytes = File(...)):
     print(f"request : {request}")
     return templates.TemplateResponse(
         "index.html",
-        {
-            "request": request,
-            "prediction": prediction,
-            "accuracy": accuracy,
-            "base64": img_str,
-        },
+        context,
     )
