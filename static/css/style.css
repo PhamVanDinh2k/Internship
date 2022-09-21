@@ -1,0 +1,74 @@
+body {
+    width: 100%;
+    height: 100%;
+    background-position: 0% 0%;
+    background-image: url(../img/backgd.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% auto;
+}
+.anh #anh {
+    position: absolute;
+    width: 30%;
+    left: 150px;
+    bottom: 120px;
+}
+.anh #imageFile {
+    position: absolute;
+    width: 10%;
+    left: 300px;
+    bottom: 27px;
+}
+.anh #chim_1 {
+    position: absolute;
+    width: 11%;
+    left: 75px;
+    top: 55px;
+}
+.anh #hac {
+    position: absolute;
+    width: 6%;
+    left: 600px;
+    bottom: 25px;
+}
+.header {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translate(-50%, -50%);
+    font-family: 'Amatic SC', cursive;
+}
+.header b {
+    font-size: 80px;
+}
+.header #buom_2 {
+    position: absolute;
+    width: 25%;
+    top: -15px;
+    right: 550px;
+}
+.header #buom_3 {
+    position: absolute;
+    width: 45%;
+    left: 400px;
+    bottom: 5px;
+}
+.justify-content-md-end img {
+    position: absolute;
+    width: 10%;
+    right: 140px;
+    bottom: 80px;
+}
+.justify-content-md-end #predict {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-20%, -50%);
+}
+.justify-content-md-end #pre{
+    position: absolute;
+}
+.justify-content-md-end #acc{
+    position: absolute;
+    margin-top: 300px;
+}
