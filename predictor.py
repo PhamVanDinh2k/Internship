@@ -58,7 +58,7 @@ class Pretictor():
 
 def predict(image):
     net = ResNet()
-    net.load_state_dict(torch.load("./models/resnet50plus.pth", map_location=torch.device('cpu')))
+    net.load_state_dict(torch.load("./models/resnet50plus.pth", map_location=torch.device('cuda')))
     net.eval()
     predict = Pretictor(net)
     out = net(image)

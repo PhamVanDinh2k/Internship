@@ -31,7 +31,7 @@ async def handle_form(request: Request, file: bytes = File(...)):
 
     # make prediction
     prediction, max = predict(image1)
-    maxx = round((max*100 * 2),2)
+    maxx = round((max*100),2)
     accuracy = str(maxx)
     context = {
         "request": request,

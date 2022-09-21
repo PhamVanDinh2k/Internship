@@ -40,6 +40,10 @@ async def handle_form(request: Request, file: bytes = File(...)):
         "base64": img_str,
     }
     print(f"request : {request}")
+    # return templates.TemplateResponse(
+    #     "index.html",
+    #     context,
+    # )
     return templates.TemplateResponse(
         "index.html",
         context,
